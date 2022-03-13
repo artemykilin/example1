@@ -1,0 +1,14 @@
+<resources>
+	<string name="app_name">PaybackTest</string>
+	<string name="search_input_hint">Enter keywords for the search</string>
+	<string name="uploaded_by">by %1$s</string>
+	<string name="tags">Tags: %1$s</string>
+	<string name="no_content_found">No content found</string>
+	<string name="dialog_message">Show the image?</string>
+	<string name="show">Show</string>
+	<string name="cancel">Cancel</string>
+	<string name="user_name">Username: %1$s</string>
+	<string name="likes">Likes: %1$d</string>
+	<string name="downloads">Downloads: %1$d</string>
+	<string name="comments">Comments: %1$d</string>
+</resources>

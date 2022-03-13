@@ -1,2 +1,2 @@
-# example1
-example project
+Add your pixabay api key here app/build.gradle
+

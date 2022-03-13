@@ -1,0 +1,132 @@
+package com.artemy.example.app.ui
+
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.artemy.payback.R
+import com.artemy.payback.databinding.ImageListFragmentBinding
+import com.artemy.payback.databinding.ImageListItemBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import dagger.android.support.DaggerFragment
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+class ImageListFragment @Inject constructor() : DaggerFragment() {
+	@Inject lateinit var viewModel: ImageListFragmentViewModel
+	private lateinit var binding: ImageListFragmentBinding
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		binding = ImageListFragmentBinding.inflate(inflater)
+		binding.vm = viewModel
+		val adapter = ImageListAdapter(ImageDetailsComparator)
+		binding.recyclerView.adapter = adapter
+		binding.recyclerView.layoutManager = LinearLayoutManager(context)
+		binding.startSearchButton.setOnClickListener { view ->
+			context?.let {
+				val imm = it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+				imm.hideSoftInputFromWindow(view.windowToken, 0)
+			}
+			adapter.refresh()
+		}
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel
+				.getPagingDataFlow()
+				.collectLatest { pagingData ->
+					adapter.submitData(pagingData)
+				}
+		}
+		viewLifecycleOwner.lifecycleScope.launch {
+			adapter.loadStateFlow.collectLatest { loadStates ->
+				binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
+				if (loadStates.refresh is LoadState.Error) {
+					val state = loadStates.refresh as LoadState.Error
+					Toast.makeText(context, state.error.localizedMessage, Toast.LENGTH_LONG).show()
+				}
+
+				if (loadStates.refresh is LoadState.NotLoading) {
+					binding.recyclerView.isVisible = adapter.itemCount > 0
+					binding.noContent.isVisible = adapter.itemCount == 0
+				}
+			}
+		}
+
+		return binding.root
+	}
+
+	private fun showDialog(imageId: Int) {
+		val builder: AlertDialog.Builder? = activity?.let {
+				AlertDialog.Builder(it)
+					.setMessage(R.string.dialog_message)
+					.setPositiveButton(R.string.show) { _, _ -> openImage(imageId) }
+					.setNegativeButton(R.string.cancel) { _, _ -> }
+		}
+		builder?.create()?.show()
+	}
+
+	private fun openImage(imageId: Int) {
+		findNavController().navigate(ImageListFragmentDirections.actionShowImage(imageId))
+	}
+
+	inner class ImageListAdapter(callback: DiffUtil.ItemCallback<UiImageDetailsShort>):
+		PagingDataAdapter<UiImageDetailsShort, ImageListAdapter.ItemViewHolder>(callback) {
+		inner class ItemViewHolder(private val binding: ImageListItemBinding): RecyclerView.ViewHolder(binding.root) {
+			fun bind(item: UiImageDetailsShort?) {
+				item?.let {
+					Glide.with(binding.root)
+						.load(it.thumbnailUrl)
+						.apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+						.into(binding.thumbnail)
+					binding.userName.text = getString(R.string.uploaded_by, it.username)
+					binding.itemTags.text = getString(R.string.tags, it.tags)
+					binding.root.setOnClickListener { showDialog(item.id) }
+				}
+			}
+		}
+
+		override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+			return ItemViewHolder(
+				ImageListItemBinding.inflate(
+					LayoutInflater.from(parent.context),
+					parent,
+					false
+				)
+			)
+		}
+
+		override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+			val item = getItem(position)
+			holder.bind(item)
+		}
+	}
+
+	object ImageDetailsComparator : DiffUtil.ItemCallback<UiImageDetailsShort> () {
+		override fun areItemsTheSame(oldItem: UiImageDetailsShort, newItem: UiImageDetailsShort): Boolean {
+			return oldItem.id == newItem.id
+		}
+
+		override fun areContentsTheSame(oldItem: UiImageDetailsShort, newItem: UiImageDetailsShort): Boolean {
+			return oldItem == newItem
+		}
+	}
+}
+

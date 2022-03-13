@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	app:startDestination="@id/image_list_fragment"
+	>
+	<fragment
+		android:id="@+id/image_list_fragment"
+		android:name="com.artemy.example.app.ui.ImageListFragment"
+		android:label="Image List Fragment"
+		>
+		<action
+			android:id="@+id/action_show_image"
+			app:destination="@id/show_image_fragment"
+			/>
+	</fragment>
+	<fragment
+		android:id="@+id/show_image_fragment"
+		android:name="com.artemy.example.app.ui.ShowImageFragment"
+		android:label="Show Image Fragment"
+		>
+		<argument
+			android:name="image_id"
+			app:argType="integer"
+			/>
+	</fragment>
+</navigation>
