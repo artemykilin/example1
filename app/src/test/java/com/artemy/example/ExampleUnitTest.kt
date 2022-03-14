@@ -1,4 +1,4 @@
-package com.artemy.payback
+package com.artemy.example
 
 import org.junit.Test
 
