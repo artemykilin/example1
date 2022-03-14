@@ -17,7 +17,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "BASE_URL", "\"https://pixabay.com/\""
-        buildConfigField "String", "API_KEY", "\"23744667-da2b446b1e84c107fa2c4a4be\""
+        buildConfigField "String", "API_KEY", "\"<ADD YOUR PIXABAY API KEY HERE>\""
         buildConfigField "String", "STARTUP_QUERY_TEXT", "\"fruits\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
