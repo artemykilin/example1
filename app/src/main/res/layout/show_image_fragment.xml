@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 	<data>
 		<variable
 			name="vm"
@@ -7,62 +9,74 @@
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
 		android:id="@+id/main"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:padding="8dp"
 		tools:context="com.artemy.example.app.ui.ShowImageFragment">
+
 		<androidx.appcompat.widget.AppCompatImageView
 			android:id="@+id/image"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
-			app:layout_constraintRight_toRightOf="parent"
+			android:layout_marginBottom="8dp"
+			app:layout_constraintBottom_toTopOf="@id/user_name_field"
 			app:layout_constraintLeft_toLeftOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toTopOf="@id/text_info_area"
-			/>
-		<androidx.appcompat.widget.LinearLayoutCompat
-			android:id="@+id/text_info_area"
-			android:layout_width="0dp"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<com.google.android.material.textview.MaterialTextView
+			android:id="@+id/user_name_field"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			app:layout_constraintRight_toRightOf="parent"
+			android:layout_marginBottom="8dp"
+			android:text="@{@string/user_name(vm.userNameField)}"
+			app:layout_constraintBottom_toTopOf="@+id/tags_field"
 			app:layout_constraintLeft_toLeftOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintRight_toRightOf="parent" />
+
+		<com.google.android.material.textview.MaterialTextView
+			android:id="@+id/tags_field"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="8dp"
+			android:text="@{@string/tags(vm.tagsField)}"
+			app:layout_constraintBottom_toTopOf="@+id/likes_field"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			/>
+
+		<com.google.android.material.textview.MaterialTextView
+			android:id="@+id/likes_field"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="8dp"
+			android:text="@{@string/likes(vm.likesField)}"
+			app:layout_constraintBottom_toTopOf="@+id/downloads_field"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			/>
+
+		<com.google.android.material.textview.MaterialTextView
+			android:id="@+id/downloads_field"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="8dp"
+			android:text="@{@string/downloads(vm.downloadsField)}"
+			app:layout_constraintBottom_toTopOf="@+id/comments_field"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			/>
+
+		<com.google.android.material.textview.MaterialTextView
+			android:id="@+id/comments_field"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@{@string/comments(vm.commentsField)}"
 			android:layout_marginBottom="16dp"
-			>
-			<com.google.android.material.textview.MaterialTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="8dp"
-				android:text="@{@string/user_name(vm.userNameField)}"
-				/>
-			<com.google.android.material.textview.MaterialTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="8dp"
-				android:text="@{@string/tags(vm.tagsField)}"
-				/>
-			<com.google.android.material.textview.MaterialTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="8dp"
-				android:text="@{@string/likes(vm.likesField)}"
-				/>
-			<com.google.android.material.textview.MaterialTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="8dp"
-				android:text="@{@string/downloads(vm.downloadsField)}"
-				/>
-			<com.google.android.material.textview.MaterialTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="@{@string/comments(vm.commentsField)}"
-				/>
-		</androidx.appcompat.widget.LinearLayoutCompat>
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			/>
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
