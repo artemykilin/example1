@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">PaybackTest</string>
+	<string name="app_name">MyMightyTest</string>
 	<string name="search_input_hint">Enter keywords for the search</string>
 	<string name="uploaded_by">by %1$s</string>
 	<string name="tags">Tags: %1$s</string>
