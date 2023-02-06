@@ -2,14 +2,14 @@ package com.artemy.example.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.artemy.example.domain.entities.ImageDetailsModel
 import com.artemy.example.domain.entities.ImageDetailsShortModel
 
 @Dao
 interface ImageDataDAO {
-	@Insert(onConflict = REPLACE)
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun insertAll(images: List<ImageData>)
 
 	@Query("SELECT count(*) FROM images")

@@ -1,14 +1,10 @@
 package com.artemy.example.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy.IGNORE
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface RemoteQueryDAO {
-	@Insert(onConflict = IGNORE)
+	@Insert(onConflict = OnConflictStrategy.IGNORE)
 	fun insert(remoteQuery: RemoteQuery)
 
 	@Update
