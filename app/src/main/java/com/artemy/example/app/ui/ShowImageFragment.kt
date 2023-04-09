@@ -27,19 +27,16 @@ class ShowImageFragment @Inject constructor(): DaggerFragment() {
 		binding = ShowImageFragmentBinding.inflate(inflater)
 		binding.vm = viewModel
 
-		viewLifecycleOwner.lifecycleScope.launch {
+		lifecycleScope.launch {
 			viewModel.loadImageDetails(args.imageId)
 		}
 
-		viewModel.imageUrlData.observe(
-			viewLifecycleOwner,
-			{
-				Glide.with(binding.root)
-					.load(it)
-					.apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
-					.into(binding.image)
-			}
-		)
+		viewModel.imageUrlData.observe(viewLifecycleOwner) {
+			Glide.with(binding.root)
+				.load(it)
+				.apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+				.into(binding.image)
+		}
 
 		return binding.root
 	}
