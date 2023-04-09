@@ -27,35 +27,35 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ImageListFragment @Inject constructor() : DaggerFragment() {
+class ImageListFragment @Inject constructor() : DaggerFragment(R.layout.image_list_fragment) {
 	@Inject lateinit var viewModel: ImageListFragmentViewModel
 	private lateinit var binding: ImageListFragmentBinding
 
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		binding = ImageListFragmentBinding.inflate(inflater)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		binding = ImageListFragmentBinding.bind(view)
+
 		binding.vm = viewModel
 		val adapter = ImageListAdapter(ImageDetailsComparator)
 		binding.recyclerView.adapter = adapter
 		binding.recyclerView.layoutManager = LinearLayoutManager(context)
-		binding.startSearchButton.setOnClickListener { view ->
+
+		binding.startSearchButton.setOnClickListener { v ->
 			context?.let {
 				val imm = it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-				imm.hideSoftInputFromWindow(view.windowToken, 0)
+				imm.hideSoftInputFromWindow(v.windowToken, 0)
 			}
 			adapter.refresh()
 		}
-		viewLifecycleOwner.lifecycleScope.launch {
+
+		lifecycleScope.launch {
 			viewModel
 				.getPagingDataFlow()
 				.collectLatest { pagingData ->
 					adapter.submitData(pagingData)
 				}
 		}
-		viewLifecycleOwner.lifecycleScope.launch {
+
+		lifecycleScope.launch {
 			adapter.loadStateFlow.collectLatest { loadStates ->
 				binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
 				if (loadStates.refresh is LoadState.Error) {
@@ -69,8 +69,6 @@ class ImageListFragment @Inject constructor() : DaggerFragment() {
 				}
 			}
 		}
-
-		return binding.root
 	}
 
 	private fun showDialog(imageId: Int) {
