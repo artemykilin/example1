@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.artemy.payback.R
 import com.artemy.payback.databinding.ShowImageFragmentBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,17 +15,13 @@ import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ShowImageFragment @Inject constructor(): DaggerFragment() {
+class ShowImageFragment @Inject constructor(): DaggerFragment(R.layout.show_image_fragment) {
 	@Inject lateinit var viewModel: ShowImageFragmentViewModel
 	private lateinit var binding: ShowImageFragmentBinding
-	val args: ShowImageFragmentArgs by navArgs()
+	private val args: ShowImageFragmentArgs by navArgs()
 
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		binding = ShowImageFragmentBinding.inflate(inflater)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		binding = ShowImageFragmentBinding.bind(view)
 		binding.vm = viewModel
 
 		lifecycleScope.launch {
@@ -37,7 +34,5 @@ class ShowImageFragment @Inject constructor(): DaggerFragment() {
 				.apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
 				.into(binding.image)
 		}
-
-		return binding.root
 	}
 }
