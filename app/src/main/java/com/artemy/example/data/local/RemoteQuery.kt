@@ -6,8 +6,8 @@ import java.util.*
 
 @Entity(tableName = "remote_queries")
 data class RemoteQuery(
-	var text: String,
-	var timestamp: Date,
+	val text: String,
+	val timestamp: Date,
 	var totalPages: Int,
 	var loadedPages: Int,
 	@PrimaryKey(autoGenerate = true) val id: Int = 0

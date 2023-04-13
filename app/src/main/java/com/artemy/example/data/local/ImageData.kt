@@ -12,15 +12,15 @@ import androidx.room.PrimaryKey
 	indices = [Index("queryId")]
 )
 data class ImageData(
-	var imageId: Int,
-	var tags: String,
-	var userName: String,
-	var likes: Int,
-	var downloads: Int,
-	var comments: Int,
-	var previewUrl: String,
-	var imageUrl: String,
-	var queryId: Int,
-	var pageNum: Int,
+	val imageId: Int,
+	val tags: String,
+	val userName: String,
+	val likes: Int,
+	val downloads: Int,
+	val comments: Int,
+	val previewUrl: String,
+	val imageUrl: String,
+	val queryId: Int,
+	val pageNum: Int,
 	@PrimaryKey(autoGenerate = true) val id: Int = 0
 )
