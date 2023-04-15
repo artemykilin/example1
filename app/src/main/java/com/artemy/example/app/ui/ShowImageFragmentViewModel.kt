@@ -24,16 +24,14 @@ class ShowImageFragmentViewModel @Inject constructor(
 	private val mImageUrl = MutableLiveData<String> ()
 	val imageUrlData: LiveData<String> get() = mImageUrl
 
-	fun loadImageDetails(imageId: Int) {
-		viewModelScope.launch {
-			with (imageDetailsMapper.map(getImageDataUseCase.get(imageId))) {
-				userNameField.set(userName)
-				tagsField.set(tags)
-				likesField.set(likes)
-				downloadsField.set(downloads)
-				commentsField.set(comments)
-				mImageUrl.postValue(url)
-			}
+	suspend fun loadImageDetails(imageId: Int) {
+		with (imageDetailsMapper.map(getImageDataUseCase.get(imageId))) {
+			userNameField.set(userName)
+			tagsField.set(tags)
+			likesField.set(likes)
+			downloadsField.set(downloads)
+			commentsField.set(comments)
+			mImageUrl.postValue(url)
 		}
 	}
 }

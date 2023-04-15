@@ -9,7 +9,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
@@ -47,25 +49,29 @@ class ImageListFragment @Inject constructor() : DaggerFragment(R.layout.image_li
 			adapter.refresh()
 		}
 
-		lifecycleScope.launch {
-			viewModel
-				.getPagingDataFlow()
-				.collectLatest { pagingData ->
-					adapter.submitData(pagingData)
-				}
+		viewLifecycleOwner.lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.CREATED) {
+				viewModel
+					.getPagingDataFlow()
+					.collectLatest { pagingData ->
+						adapter.submitData(pagingData)
+					}
+			}
 		}
 
-		lifecycleScope.launch {
-			adapter.loadStateFlow.collectLatest { loadStates ->
-				binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
-				if (loadStates.refresh is LoadState.Error) {
-					val state = loadStates.refresh as LoadState.Error
-					Toast.makeText(context, state.error.localizedMessage, Toast.LENGTH_LONG).show()
-				}
+		viewLifecycleOwner.lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.CREATED) {
+				adapter.loadStateFlow.collectLatest { loadStates ->
+					binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
+					if (loadStates.refresh is LoadState.Error) {
+						val state = loadStates.refresh as LoadState.Error
+						Toast.makeText(context, state.error.localizedMessage, Toast.LENGTH_LONG).show()
+					}
 
-				if (loadStates.refresh is LoadState.NotLoading) {
-					binding.recyclerView.isVisible = adapter.itemCount > 0
-					binding.noContent.isVisible = adapter.itemCount == 0
+					if (loadStates.refresh is LoadState.NotLoading) {
+						binding.recyclerView.isVisible = adapter.itemCount > 0
+						binding.noContent.isVisible = adapter.itemCount == 0
+					}
 				}
 			}
 		}
