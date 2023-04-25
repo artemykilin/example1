@@ -4,10 +4,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.artemy.example.domain.mappers.ImageDetailsFullMapper
 import com.artemy.example.domain.usecases.GetImageDataUseCase
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ShowImageFragmentViewModel @Inject constructor(
