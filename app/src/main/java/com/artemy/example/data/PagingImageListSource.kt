@@ -8,6 +8,7 @@ import com.artemy.example.data.local.ImageDataMapper
 import com.artemy.example.data.local.RemoteQuery
 import com.artemy.example.data.remote.PixabayService
 import com.artemy.example.domain.entities.ImageDetailsShortModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -17,13 +18,14 @@ const val PAGE_LEN = 20
 class PagingImageListSource constructor (
 	private val queryText: String,
 	private val db: AppDatabase,
-	private val pixabayService: PixabayService
+	private val pixabayService: PixabayService,
+	private val dispatcher: CoroutineDispatcher
 ): PagingSource<Int, ImageDetailsShortModel>() {
 
 	override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ImageDetailsShortModel> {
 		val pageNum = params.key ?: 1
 		return try {
-			withContext(Dispatchers.IO) {
+			withContext(dispatcher) {
 				if (db.getRemoteQueryDAO().noRequest(queryText)) {
 					db.getRemoteQueryDAO().insert(
 						RemoteQuery(queryText, Date(System.currentTimeMillis()), -1, 0)

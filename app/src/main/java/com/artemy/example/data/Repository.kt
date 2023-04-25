@@ -3,6 +3,7 @@ package com.artemy.example.data
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.paging.PagingSource
+import com.artemy.example.app.IAppDispatchers
 import com.artemy.example.data.local.AppDatabase
 import com.artemy.example.data.remote.PixabayService
 import com.artemy.example.domain.IRepository
@@ -10,13 +11,13 @@ import com.artemy.example.domain.entities.ImageDetailsModel
 import com.artemy.example.domain.entities.ImageDetailsShortModel
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
 class Repository @Inject constructor(
+	private val appDispatchers: IAppDispatchers,
 	private val appDatabase: AppDatabase,
 	private val pixabayService: PixabayService
 ): IRepository {
@@ -34,11 +35,11 @@ class Repository @Inject constructor(
 	}
 
 	override fun getPagingImageDataSource(queryText: String): PagingSource<Int, ImageDetailsShortModel> {
-		return PagingImageListSource(normalizeQuery(queryText), appDatabase, pixabayService)
+		return PagingImageListSource(normalizeQuery(queryText), appDatabase, pixabayService, appDispatchers.io)
 	}
 
 	override suspend fun getImageDetails(imageId: Int): ImageDetailsModel {
-		return withContext(Dispatchers.IO) {
+		return withContext(appDispatchers.io) {
 			appDatabase.getImageDataDAO().loadImageDetails(imageId)
 		}
 	}
