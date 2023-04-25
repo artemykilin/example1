@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -77,16 +76,6 @@ class ImageListFragment @Inject constructor() : DaggerFragment(R.layout.image_li
 		}
 	}
 
-	private fun showDialog(imageId: Int) {
-		val builder: AlertDialog.Builder? = activity?.let {
-				AlertDialog.Builder(it)
-					.setMessage(R.string.dialog_message)
-					.setPositiveButton(R.string.show) { _, _ -> openImage(imageId) }
-					.setNegativeButton(R.string.cancel) { _, _ -> }
-		}
-		builder?.create()?.show()
-	}
-
 	private fun openImage(imageId: Int) {
 		findNavController().navigate(ImageListFragmentDirections.actionShowImage(imageId))
 	}
@@ -102,7 +91,7 @@ class ImageListFragment @Inject constructor() : DaggerFragment(R.layout.image_li
 						.into(binding.thumbnail)
 					binding.userName.text = getString(R.string.uploaded_by, it.username)
 					binding.itemTags.text = getString(R.string.tags, it.tags)
-					binding.root.setOnClickListener { showDialog(item.id) }
+					binding.root.setOnClickListener { openImage(item.id) }
 				}
 			}
 		}
