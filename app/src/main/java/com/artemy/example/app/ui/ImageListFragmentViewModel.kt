@@ -4,7 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.artemy.payback.BuildConfig
+import com.artemy.example.BuildConfig
 import com.artemy.example.data.PAGE_LEN
 import com.artemy.example.domain.mappers.ImageDetailsShortMapper
 import com.artemy.example.domain.usecases.GetPagingDataSourceUseCase

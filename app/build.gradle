@@ -49,7 +49,7 @@ android {
         dataBinding true
         viewBinding true
     }
-    namespace 'com.artemy.payback'
+    namespace 'com.artemy.example'
 }
 
 dependencies {

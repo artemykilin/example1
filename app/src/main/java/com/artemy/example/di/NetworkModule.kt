@@ -1,6 +1,6 @@
 package com.artemy.example.di
 
-import com.artemy.payback.BuildConfig
+import com.artemy.example.BuildConfig
 import com.artemy.example.data.remote.PixabayService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

@@ -3,8 +3,8 @@ package com.artemy.example.app.ui
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
-import com.artemy.payback.R
-import com.artemy.payback.databinding.ShowImageFragmentBinding
+import com.artemy.example.R
+import com.artemy.example.databinding.ShowImageFragmentBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions

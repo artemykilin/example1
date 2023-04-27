@@ -1,7 +1,7 @@
 package com.artemy.example.app.ui
 
 import android.os.Bundle
-import com.artemy.payback.R
+import com.artemy.example.R
 import dagger.android.support.DaggerAppCompatActivity
 
 class MainActivity : DaggerAppCompatActivity() {

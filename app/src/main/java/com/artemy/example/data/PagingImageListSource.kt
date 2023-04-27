@@ -2,7 +2,7 @@ package com.artemy.example.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.artemy.payback.BuildConfig
+import com.artemy.example.BuildConfig
 import com.artemy.example.data.local.AppDatabase
 import com.artemy.example.data.local.ImageDataMapper
 import com.artemy.example.data.local.RemoteQuery
