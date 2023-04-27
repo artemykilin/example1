@@ -10,7 +10,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.artemy.payback"
+        applicationId "com.artemy.example"
         minSdk 23
         targetSdk 33
         versionCode 1
