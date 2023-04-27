@@ -6,7 +6,6 @@ import javax.inject.Inject
 
 class GetImageDataUseCase @Inject constructor(private val repository: IRepository) {
 	suspend fun get(imageId: Int): ImageDetailsModel {
-		throw RuntimeException("something's gone wrong")
-		//return repository.getImageDetails(imageId)
+		return repository.getImageDetails(imageId)
 	}
 }
