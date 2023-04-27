@@ -11,4 +11,5 @@
 	<string name="likes">Likes: %1$d</string>
 	<string name="downloads">Downloads: %1$d</string>
 	<string name="comments">Comments: %1$d</string>
+	<string name="error_title">Oops... Somethings\'s gone wrong :(</string>
 </resources>
