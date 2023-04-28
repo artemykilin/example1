@@ -3,21 +3,21 @@ package com.artemy.example.data.remote
 import com.google.gson.annotations.SerializedName
 
 data class PixabayResponse(
-	var totalHits: Int = 0,
-	var hits: List<PixabayImageData>
+	val totalHits: Int = 0,
+	val hits: List<PixabayImageData>
 )
 
 data class PixabayImageData (
-	var id: Int,
-	var tags: String,
-	var user: String,
-	var likes: Int,
-	var downloads: Int,
-	var comments: Int,
+	val id: Int,
+	val tags: String,
+	val user: String,
+	val likes: Int,
+	val downloads: Int,
+	val comments: Int,
 
 	@SerializedName("previewURL")
-	var previewUrl: String,
+	val previewUrl: String,
 
 	@SerializedName("largeImageURL")
-	var imageUrl: String
+	val imageUrl: String
 )
