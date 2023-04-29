@@ -20,7 +20,7 @@ android {
         buildConfigField "String", "API_KEY", "\"23744667-da2b446b1e84c107fa2c4a4be\""
         buildConfigField "String", "STARTUP_QUERY_TEXT", "\"fruits\""
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.artemy.example.runner.UiRunner"
 
         kapt {
             arguments {
@@ -96,4 +96,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'com.google.dagger:dagger-android:2.44.2'
+    androidTestImplementation 'com.google.dagger:dagger-android-support:2.44.2'
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.44.2'
+    kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.44.2'
 }

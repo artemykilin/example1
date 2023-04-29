@@ -6,11 +6,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 
 class MyApplication: DaggerApplication() {
-
-	private lateinit var mAppComponent: AppComponent
-
 	override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-		mAppComponent = DaggerAppComponent.builder().application(this).build()
-		return mAppComponent
+		return DaggerAppComponent.builder().application(this).build()
 	}
 }
