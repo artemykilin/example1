@@ -1,6 +1,5 @@
 package com.artemy.example.app
 
-import com.artemy.example.di.AppComponent
 import com.artemy.example.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
