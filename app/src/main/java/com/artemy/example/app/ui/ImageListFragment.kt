@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -23,6 +22,7 @@ import com.artemy.example.databinding.ImageListItemBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -64,7 +64,11 @@ class ImageListFragment @Inject constructor() : DaggerFragment(R.layout.image_li
 					binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
 					if (loadStates.refresh is LoadState.Error) {
 						val state = loadStates.refresh as LoadState.Error
-						Toast.makeText(context, state.error.localizedMessage, Toast.LENGTH_LONG).show()
+						Snackbar.make(
+							binding.root,
+							state.error.localizedMessage ?: "null",
+							Snackbar.LENGTH_LONG
+						).show()
 					}
 
 					if (loadStates.refresh is LoadState.NotLoading) {

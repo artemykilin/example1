@@ -9,7 +9,6 @@ import com.artemy.example.data.local.RemoteQuery
 import com.artemy.example.data.remote.PixabayService
 import com.artemy.example.domain.entities.ImageDetailsShortModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
